@@ -1,0 +1,38 @@
+{% block footer %}
+    <div class="ui inverted vertical footer segment">
+        <div class="ui center aligned container">
+            <div class="ui stackable inverted divided grid">
+                <div class="three wide column">
+                    <h4 class="ui inverted header">Social Media</h4>
+                    <div class="ui inverted link list">
+                        <a target="_blank" href="https://www.facebook.com/kuliyata.lk/" class="item">Facebook</a>
+                        <a target="_blank" href="https://twitter.com/kuliyata" class="item">Twitter</a>
+                        <a href="#" class="item">Blog</a>
+                    </div>
+                </div>
+                <div class="three wide column">
+                    <h4 class="ui inverted header">Help and Support</h4>
+                    <div class="ui inverted link list">
+                        <a target="_blank" href="{{ path('help_supprt_page') }}" class="item">FAQ</a>
+                        <a target="_blank" href="{{ path('help_supprt_page') }}" class="item">Contact Us</a>
+                    </div>
+                </div>
+                <div class="three wide column">
+                    <h4 class="ui inverted header">About Us</h4>
+                    <div class="ui inverted link list">
+                        <a target="_blank" href="{{ path('about_us_page') }}" class="item">About us</a>
+                        <a href="#" class="item">Terms and conditions</a>
+                        <a href="#" class="item">Privacy policy</a>
+                    </div>
+                </div>
+                <div href="" class="seven wide column">
+                    <a href="{{ path('homepage') }}"><img src="{{ asset('/images/common/text_logo.png') }}" style="height: 80px; width: 250px;"></a>
+                </div>
+            </div>
+            <div class="ui inverted section divider"></div>
+            <div class="ui horizontal inverted small divided link list">
+                <a class="item" href="#">Copyright &copy; Kuliyata.lk 2018</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

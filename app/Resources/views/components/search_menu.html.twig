@@ -1,0 +1,21 @@
+{% block navmenu %}
+    <div class="ui borderless main menu shadow-sm center aligned">
+        <div class="ui text container">
+            <div class="item">
+                <div class="ui icon input">
+                    <input type="text" placeholder="Search...">
+                    <i class="search icon"></i>
+                </div>
+            </div>
+            <div class="item">
+                <div id="openLocationModal" class="ui teal button"><i class="map marker icon"></i>Select a location</div>
+            </div>
+            <div class="item">
+                <div id="openModal" class="ui teal button"><i class="map marker icon"></i>Select a category</div>
+            </div>
+            <div class="item">
+                <div id="resetFilters" class="ui primary button"><i class="map marker icon"></i>Reset filters</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

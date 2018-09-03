@@ -1,0 +1,303 @@
+{% block left_menu %}
+    <div class="ui vertical teal menu" style="width: 100%;">
+        <div class="item" style="background-color: #bababc">
+            Search Filters
+        </div>
+        <a class="item" id="open-select-location-modal">
+            {% if isALocationSelected %}
+                <i class="map marker icon"></i> <span id="selected-location-name">{{ selectedLocation.getName() }}</span>
+                <input type="hidden" id="selected-location-id" value="{{ selectedLocation.getId() }}">
+            {% else %}
+                <i class="map marker icon"></i> <span id="selected-location-name">Select Location</span>
+                <input type="hidden" id="selected-location-id">
+            {% endif %}
+        </a>
+        <a class="item disabled" id="applyFilters" style="color: darkgreen;" >Apply filters</a>
+        {% if resetEnabled %}
+            <a class="item" id="resetFilters" style="color: saddlebrown;">Reset filters</a>
+        {% else %}
+            <a class="item disabled" id="resetFilters" style="color: saddlebrown;">Reset filters</a>
+        {% endif %}
+        <input type="hidden" id="isMainCategorySearch" value="{{ isMainCategorySearch }}">
+        <span id="category-navigation">
+            {% if backToMainCategoriesEnabled %}
+                <a class="item" style="color: #0d71bb;" href="{{ path('ads',{'mainCategoryId':0}) }}">
+                    <i class="grid layout icon"></i>
+                    Back to Categories
+                </a>
+            {% endif %}
+            {% if selectedCategory != "All Categories" %}
+                <a href="{{ path('ads',{'mainCategoryId':selectedCategory.getId()}) }}" class="item"
+                   id="selectedCategotyMenuTitle" selectedCategoryId="{{ selectedCategory.getId() }}" style="background-color: #bababc">
+                    <i class="grey large {{ selectedCategory.getIcon() }} icon"></i>
+                    {{ selectedCategory.getName() }}
+                </a>
+            {% else %}
+                 <div class="item" id="selectedCategotyMenuTitle" style="background-color: #bababc">
+                    {{ selectedCategory }}
+                </div>
+            {% endif %}
+            {% for listItem in listData  %}
+                {% if selectedCategory == "All Categories" %}
+                    {% set params= 'mainCategoryId'%}
+                {% else %}
+                    {% set params= 'categoryId'%}
+                {% endif %}
+                {% if active == listItem.getId() %}
+                    {% set itemActivated = 'active' %}
+                {% else %}
+                    {% set itemActivated = '' %}
+                {% endif %}
+                <a class="item select-category {{ itemActivated }}" href="{{ path('ads',{(params):listItem.getId()}) }}" categoryId="{{ listItem.getId() }}">
+                    {% if selectedCategory == "All Categories" %}
+                        <i class="grey large {{ listItem.getIcon() }} icon"></i>
+                    {% endif %}
+                    {{ listItem.getName() }}
+                </a>
+            {% endfor %}
+        </span>
+    </div>
+
+    <div id="select-category-modal" class="ui small modal">
+        <i class="close icon"></i>
+        <div class="header">
+            Category
+        </div>
+        <div id="modal-category-list" class="scrolling content">
+            <div class="ui grid">
+                <div class="six wide column">
+                    <div class="ui middle aligned divided list">
+                        <div class="item select-category selected-category" categoryId="1">
+                            <i class="large angle right icon"></i>
+                            <i class="large grey car icon" style="margin-left: 10px;"></i>
+                            <div class="content">
+                                <a class="header">Vehicles</a>
+                            </div>
+                        </div>
+                        <div class="item select-category" categoryId="2">
+                            <i class="large brown home icon"></i>
+                            <div class="content">
+                                <a class="header">Property</a>
+                            </div>
+                        </div>
+                        <div class="item select-category" categoryId="3">
+                            <i class="large teal cogs icon"></i>
+                            <div class="content">
+                                <a class="header">Machinery</a>
+                            </div>
+                        </div>
+                        <div class="item select-category" categoryId="4">
+                            <i class="large pink female icon"></i>
+                            <div class="content">
+                                <a class="header">Clothes / Ornaments</a>
+                            </div>
+                        </div>
+                        <div class="item select-category" categoryId="5">
+                            <i class="large violet laptop icon"></i>
+                            <div class="content">
+                                <a class="header">Electronics</a>
+                            </div>
+                        </div>
+                        <div class="item select-category" categoryId="6">
+                            <i class="large green music icon"></i>
+                            <div class="content">
+                                <a class="header">Entertainment</a>
+                            </div>
+                        </div>
+                        <div class="item select-category" categoryId="7">
+                            <i class="large black shopping basket icon"></i>
+                            <div class="content">
+                                <a class="header">Festival Items</a>
+                            </div>
+                        </div>
+                        <div class="item select-category" categoryId="8">
+                            <i class="large olive football ball icon"></i>
+                            <div class="content">
+                                <a class="header">Sports</a>
+                            </div>
+                        </div>
+                        <div class="item select-category" categoryId="9">
+                            <i class="large red building icon"></i>
+                            <div class="content">
+                                <a class="header">Construction</a>
+                            </div>
+                        </div>
+                        <div class="item select-category" categoryId="10">
+                            <i class="large blue plane icon"></i>
+                            <div class="content">
+                                <a class="header">Travelling</a>
+                            </div>
+                        </div>
+                        <div class="item select-category" categoryId="11">
+                            <i class="large yellow box icon"></i>
+                            <div class="content">
+                                <a class="header">Other</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="two wide column"></div>
+                <div class="six wide column">
+                    <div class="ui middle aligned divided list" id="sub-category-list">
+                        <div class="item">
+                            <div class="content">
+                                <a style="color: grey; !important;">... Please select a category ...</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="two wide column"></div>
+            </div>
+        </div>
+    </div>
+    <div id="select-location-modal" class="ui modal">
+        <i class="close icon"></i>
+        <div class="header">
+            Location
+        </div>
+        <div id="modal-location-list" class="scrolling content">
+            <div class="ui grid">
+                <div class="six wide column">
+                    <div class="ui middle aligned divided list">
+                        <div class="item select-location selected-location" districtId="1">
+                            <div class="content">
+                                <a class="header">Ampara</a>
+                            </div>
+                        </div>
+                        <div class="item select-location" districtId="2">
+                            <div class="content">
+                                <a class="header">Anuradhapura</a>
+                            </div>
+                        </div>
+                        <div class="item select-location" districtId="3">
+                            <div class="content">
+                                <a class="header">Badulla</a>
+                            </div>
+                        </div>
+                        <div class="item select-location" districtId="4">
+                            <div class="content">
+                                <a class="header">Batticaloa</a>
+                            </div>
+                        </div>
+                        <div class="item select-location" districtId="5">
+                            <div class="content">
+                                <a class="header">Colombo</a>
+                            </div>
+                        </div>
+                        <div class="item select-location" districtId="6">
+                            <div class="content">
+                                <a class="header">Galle</a>
+                            </div>
+                        </div>
+                        <div class="item select-location" districtId="7">
+                            <div class="content">
+                                <a class="header">Gampaha</a>
+                            </div>
+                        </div>
+                        <div class="item select-location" districtId="8">
+                            <div class="content">
+                                <a class="header">Hambanthota</a>
+                            </div>
+                        </div>
+                        <div class="item select-location" districtId="9">
+                            <div class="content">
+                                <a class="header">Jaffna</a>
+                            </div>
+                        </div>
+                        <div class="item select-location" districtId="10">
+                            <div class="content">
+                                <a class="header">Kaluthara</a>
+                            </div>
+                        </div>
+                        <div class="item select-location" districtId="11">
+                            <div class="content">
+                                <a class="header">Kandy</a>
+                            </div>
+                        </div>
+                        <div class="item select-location" districtId="12">
+                            <div class="content">
+                                <a class="header">Kegalle</a>
+                            </div>
+                        </div>
+                        <div class="item select-location" districtId="13">
+                            <div class="content">
+                                <a class="header">Kilinochchi</a>
+                            </div>
+                        </div>
+                        <div class="item select-location" districtId="14">
+                            <div class="content">
+                                <a class="header">Kurunegala</a>
+                            </div>
+                        </div>
+                        <div class="item select-location" districtId="15">
+                            <div class="content">
+                                <a class="header">Mannar</a>
+                            </div>
+                        </div>
+                        <div class="item select-location" districtId="16">
+                            <div class="content">
+                                <a class="header">Mathale</a>
+                            </div>
+                        </div>
+                        <div class="item select-location" districtId="17">
+                            <div class="content">
+                                <a class="header">Matara</a>
+                            </div>
+                        </div>
+                        <div class="item select-location" districtId="18">
+                            <div class="content">
+                                <a class="header">Monaragala</a>
+                            </div>
+                        </div>
+                        <div class="item select-location" districtId="19">
+                            <div class="content">
+                                <a class="header">Mullaitivu</a>
+                            </div>
+                        </div>
+                        <div class="item select-location" districtId="20">
+                            <div class="content">
+                                <a class="header">Nuwara eliya</a>
+                            </div>
+                        </div>
+                        <div class="item select-location" districtId="21">
+                            <div class="content">
+                                <a class="header">Polonnaruwa</a>
+                            </div>
+                        </div>
+                        <div class="item select-location" districtId="22">
+                            <div class="content">
+                                <a class="header">Puttalam</a>
+                            </div>
+                        </div>
+                        <div class="item select-location" districtId="23">
+                            <div class="content">
+                                <a class="header">Rathnapura</a>
+                            </div>
+                        </div>
+                        <div class="item select-location" districtId="24">
+                            <div class="content">
+                                <a class="header">Trincomalee</a>
+                            </div>
+                        </div>
+                        <div class="item select-location" districtId="25">
+                            <div class="content">
+                                <a class="header">Vavuniya</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="two wide column"></div>
+                <div class="six wide column">
+                    <div class="ui middle aligned divided list" id="sub-location-list">
+                        <div class="item">
+                            <div class="content">
+                                <a style="color: grey; !important;">... Please select a category ...</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="two wide column"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

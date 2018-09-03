@@ -1,0 +1,20 @@
+AppBundle\Entity\FrequencyType:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\FrequencyTypeRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: '50'
+            unique: true
+    oneToMany:
+        ads:
+            targetEntity: Ad
+            mappedBy: frequencyType
+    lifecycleCallbacks: {  }

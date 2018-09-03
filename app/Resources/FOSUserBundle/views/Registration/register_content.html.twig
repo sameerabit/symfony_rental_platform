@@ -1,0 +1,72 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% form_theme form 'overridenFragments/form_errors.html.twig' %}
+
+
+<div class="container">
+    <div class="ui grid center aligned page">
+        <div class="ten wide column">
+
+            <form class="ui form" action="{{ path("fos_user_registration_register") }}" method="post">
+                <h2 class="ui dividing header">Register</h2>
+
+                <div class="field">
+                    {{ form_label(form.username) }}
+                    {{ form_errors(form.username) }}
+                    {{ form_widget(form.username) }}
+                </div>
+
+                <div class="field">
+                    <div class="two fields">
+                        <div class="field">
+                            {{ form_label(form.firstName) }}
+                            {{ form_errors(form.firstName) }}
+                            {{ form_widget(form.firstName) }}
+                        </div>
+                        <div class="field">
+                            {{ form_label(form.lastName) }}
+                            {{ form_errors(form.lastName) }}
+                            {{ form_widget(form.lastName) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="two fields">
+                        <div class="field">
+                            {{ form_label(form.email)}}
+                            {{ form_errors(form.email) }}
+                            {{ form_widget(form.email) }}
+                        </div>
+                        <div class="field">
+                            {{ form_label(form.contactNumber) }}
+                            {{ form_errors(form.contactNumber) }}
+                            {{ form_widget(form.contactNumber) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form_label(form.address) }}
+                    {{ form_errors(form.address) }}
+                    {{ form_widget(form.address) }}
+                </div>
+                <div class="field">
+                    {{ form_label(form.plainPassword.first) }}
+                    {{ form_errors(form.plainPassword.first) }}
+                    {{ form_widget(form.plainPassword.first) }}
+                </div>
+                <div class="field">
+                    {{ form_label(form.plainPassword.second) }}
+                    {{ form_errors(form.plainPassword.second) }}
+                    {{ form_widget(form.plainPassword.second) }}
+                </div>
+
+                {{ form_rest(form) }}
+                <div>
+                    <input class="ui submit button blue" type="submit" value="{{ 'registration.submit'|trans }}" />
+                    <a href="{{ path('fos_user_security_login') }}"><div class="ui white button" >Login</div></a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

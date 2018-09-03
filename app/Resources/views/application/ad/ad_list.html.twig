@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    {#{% include 'components/search_menu.html.twig' %}#}
+    <div class="container">
+        <div class="ui grid">
+            <div class="four wide column">
+                {% include 'components/left_menu.html.twig' %}
+            </div>
+            <div class="twelve wide column divided">
+                {% if ads | length > 0 %}
+                    {% for ad in ads %}
+                        <div class="item ui grid">
+                            <div class="three wide column">
+                                {% if ad.photos | length !=0 %}
+                                    <img class="left floated ui small rounded image"
+                                         src="{{ asset('images/ads/'~ad.photos[0].url) }}">
+                                {% endif %}
+                            </div>
+                            <div class="eight wide column">
+                                <h4 class="ui header"><a href="/ads/{{ ad.id }}">{{ ad.title }}</a></h4>
+                                <p class="two wide coumn">
+                                    {% if ad.description | length > 150 %}
+                                        {{ ad.description [:150] ~ '...'}}
+                                    {% else %}
+                                        {{ ad.description }}
+                                    {% endif %}
+                                </p>
+                                <p style="color: #7d899a">
+                                    <i class="map marker icon"></i>{{ ad.location.name }} , {{ ad.location.district.name }}
+                                    <i class="grid layout icon" style="margin-left: 20px;"></i> {{ ad.subCategory.name }}
+                                </p>
+                                {#<div class="ui star rating bottom aligned" data-rating="3"></div>#}
+                            </div>
+                            <div class="four wide column right floated">
+                                <p class="ui orange tag label">{{ ad.cost }} LKR per {{ ad.rentFrequency }} {{ ad.frequencyType.name }}</p>
+                                <br>
+                                <p class="ui green tag label" style="margin-top: 5px;">{{ ad.contactNumber }}</p>
+                            </div>
+                        </div>
+                        <div class="ui divider"></div>
+                    {% endfor %}
+                    <div class="ui right floated pagination menu">
+                        {{ knp_pagination_render(ads) }}
+                    </div>
+                {% else %}
+                    <div class="ui grid center aligned">
+                        <p style="font-size:20px;margin-top: 50px;color: #7d899a;"><i class="info circle icon"></i>No Results Found.</p>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+    {#<div class="container">#}
+        {#<div class="ui grid">#}
+            {#<div class="four wide column">#}
+                {#{% include 'components/left_menu.html.twig' %}#}
+            {#</div>#}
+            {#<div id="register-modal" class="ui modal">#}
+                {#<i class="close icon"></i>#}
+                {#<div class="header">#}
+                    {#Category#}
+                {#</div>#}
+                {#<div id="category_list" class="ui horizontal list">#}
+
+                {#</div>#}
+            {#</div>#}
+            {#<div id="location-modal" class="ui modal">#}
+                {#<i class="close icon"></i>#}
+                {#<div class="header">#}
+                    {#Location#}
+                {#</div>#}
+                {#<div id="location_list" class="ui horizontal list">#}
+
+                {#</div>#}
+            {#</div>#}
+            {#<div class="twelve wide column">#}
+                {#<div>#}
+                    {#<input type="text" id="item_autocomplete">#}
+                    {#<input type="text" id="search_item_id">#}
+                    {#<input type="text" id="search_item_name">#}
+                {#</div>#}
+                {#<br>#}
+                {#<div id="itemList" class="ui divided list">#}
+                    {#{% for ad in ads %}#}
+                        {#<div class="ad ui grid">#}
+                            {#<div class="three wide column">#}
+                                {#{% if ad.photos | length !=0 %}#}
+                                    {#<img class="left floated ui small rounded image"#}
+                                         {#src="images/ads/{{ ad.photos[loop.index0].url }}">#}
+                                {#{% endif %}#}
+
+                            {#</div>#}
+                            {#<div class="eight wide column">#}
+                                {#<h4 class="ui header"><a href="/ad/{{ ad.id }}">{{ ad.title }}</a></h4>#}
+                                {#<p class="two wide coumn">#}
+                                    {#{{ ad.description }}#}
+                                {#</p>#}
+                                {#<p>#}
+                                    {#from: Baddegama,{{ ad.location.name }}#}
+                                {#</p>#}
+                                {#<div class="ui star rating bottom aligned" data-rating="3"></div>#}
+                            {#</div>#}
+                            {#<div class="four wide column right floated">#}
+                                {#<div class="ui huge header right floated">{{ ad.cost }} LKR</div>#}
+                                {#<div class="ui right floated">Per {{ ad.rentFrequency }} {{ ad.frequencyType.name }}</div>#}
+                                {#<button class="ui labeled icon green button right floated">#}
+                                    {#<i class="phone icon"></i>#}
+                                    {#071 248 9789#}
+                                {#</button>#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#{% endfor %}#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+
+
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/ads/ad_list.js') }}" type="text/javascript"></script>
+{% endblock %}

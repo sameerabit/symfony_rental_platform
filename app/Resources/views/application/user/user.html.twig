@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    {#{% include 'components/search_menu.html.twig' %}#}
+    <div class="container">
+        <div class="ui grid">
+            <div class="row" >
+                <div class="three wide column">
+                    <div class="ui card">
+                        <div class="image">
+                            <img src="{{ asset('images/common/user.png') }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="seven wide column">
+                    <h3>
+                        {{ user.firstName }} {{ user.lastName }}<br>
+                        <span style="font-weight: normal;color: #7d899a;"><i class="user icon"></i>{{ user.username }}</span>
+                    </h3>
+                    <p>
+                       <i class="phone icon"></i>{{ user.contactNumber }}<br>
+                       <i class="envelope outline icon"></i>{{ user.email }}<br>
+                       <i class="map marker icon"></i>{{ user.address }}
+                    </p>
+                    {% if app.user %}
+                        {% if user.id == app.user.id %}
+                            <a href="#" class="ui compact labeled icon button">
+                                <i class="edit icon"></i>
+                                Edit Profile
+                            </a>
+                            <a class="ui compact labeled icon red button">
+                                <i class="trash icon"></i>
+                                Delete Account
+                            </a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                {% if app.user %}
+                    {% if user.id == app.user.id %}
+                        <div class="six wide column" style="background-color: #FFF6CD;padding: 10px;border-radius: 5px;">
+                            <p><span style="color: black; font-weight: bold;"> NOTE</span></p>
+                            <p>1) Your ads are listed below.</p>
+                            <p>2) You can edit/delete any ad from it's details screen.</p>
+                            <p>3) Once you delete an ad it will remove from your list. If you want to reactivate it please <a href="sdadas">contact us</a> within 7 days.</p>
+                            <p>4) Once you delete your account, you will not be able to access to the system. If you want to
+                                reactivate it please <a href="sdadas">contact us</a> within 7 days. After 7 days we will remove it permanently from the system.</p>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <div class="row">
+                <div class="column divided">
+                    {% if ads | length > 0 %}
+                        <hr style="margin-bottom: 20px;display: block;border: 0;border-top: 3px solid #ccc;padding: 0;">
+                        {% for ad in ads %}
+                            <div class="item ui grid">
+                                <div class="three wide column">
+                                    {% if ad.photos | length !=0 %}
+                                        <img class="left floated ui small rounded image"
+                                             src="{{ asset('images/ads/'~ad.photos[0].url) }}">
+                                    {% endif %}
+
+                                </div>
+                                <div class="eight wide column">
+                                    <h4 class="ui header"><a href="/ads/{{ ad.id }}">{{ ad.title }}</a></h4>
+                                    <p class="two wide coumn">
+                                        {% if ad.description | length > 150 %}
+                                            {{ ad.description [:150] ~ '...'}}
+                                        {% else %}
+                                            {{ ad.description }}
+                                        {% endif %}
+                                    </p>
+                                    <p style="color: #7d899a">
+                                        <i class="map marker icon"></i>{{ ad.location.name }} , {{ ad.location.district.name }}
+                                        <i class="grid layout icon" style="margin-left: 20px;"></i> {{ ad.subCategory.name }}
+                                    </p>
+                                </div>
+                                <div class="four wide column right floated">
+                                    <p class="ui orange tag label">{{ ad.cost }} LKR per {{ ad.rentFrequency }} {{ ad.frequencyType.name }}</p>
+                                    <br>
+                                    <p class="ui green tag label" style="margin-top: 5px;">{{ ad.contactNumber }}</p>
+                                </div>
+                            </div>
+                            <div class="ui divider"></div>
+                        {% endfor %}
+                        <div class="ui right floated pagination menu">
+                            {{ knp_pagination_render(ads) }}
+                        </div>
+                    {% else %}
+                        <div class="ui grid center aligned">
+                            <p style="font-size:20px;margin-top: 50px;color: #7d899a;"><i class="info circle icon"></i>No ads found in your list.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <div class="container">
+        <h2 class="ui horizontal divider header" style="color: #7d899a">
+            Message From
+            <span style="color: black;font-weight: bold;">Kuliyata.</span>
+            <span style="color: #FFB70A;">lk</span>
+        </h2>
+        <div class="center aligned aligned ui grid">
+            <div class="eight wide column" style="margin-top: 20px;">
+                <div class="ui icon message warning">
+                    <i class="eye slash icon"></i>
+                    <div class="content">
+                        <div class="header">
+                            404 Page Not Found
+                        </div>
+                        <p>The requested page couldn't be located. Checkout for any URL
+                            misspelling or <a href="{{ path('homepage') }}">return to the homepage.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

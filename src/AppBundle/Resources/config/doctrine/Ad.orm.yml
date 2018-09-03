@@ -1,0 +1,66 @@
+AppBundle\Entity\Ad:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\AdRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+        description:
+            type: string
+            length: 255
+        cost:
+            type: decimal
+            precision: 10
+            scale: 0
+        rentFrequency:
+            type: integer
+        contactNumber:
+            type: string
+            length: '30'
+            nullable: true
+        createdAt:
+            type: datetime
+        state:
+            type: string
+            length: '30'
+        adNumber:
+            type: string
+            length: 500
+    manyToOne:
+        subCategory:
+            targetEntity: SubCategory
+            inversedBy: ads
+            joinColumn:
+                name: subCategory
+                referencedColumnName: id
+        location:
+            targetEntity: Location
+            inversedBy: ads
+            joinColumn:
+                name: location
+                referencedColumnName: id
+        frequencyType:
+            targetEntity: FrequencyType
+            inversedBy: ads
+            joinColumn:
+                name: frequencyType
+                referencedColumnName: id
+        user:
+            targetEntity: User
+            inversedBy: ads
+            joinColumn:
+                name: user
+                referencedColumnName: id
+    oneToMany:
+        photos:
+            targetEntity: Photo
+            mappedBy: ad
+            cascade: ["persist"]
+    lifecycleCallbacks: {  }

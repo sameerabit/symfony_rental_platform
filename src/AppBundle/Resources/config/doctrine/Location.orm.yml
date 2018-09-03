@@ -1,0 +1,26 @@
+AppBundle\Entity\Location:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\LocationRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+    oneToMany:
+        ads:
+            targetEntity: Ad
+            mappedBy: location
+    manyToOne:
+        district:
+            targetEntity: District
+            inversedBy: locations
+            joinColumn:
+                name: district
+                referencedColumnName: id
+    lifecycleCallbacks: {  }

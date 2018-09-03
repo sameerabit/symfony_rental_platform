@@ -1,0 +1,29 @@
+AppBundle\Entity\User:
+    type:  entity
+    table: user
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        firstName:
+            type: string
+            length: 255
+            nullable: true
+        lastName:
+            type: string
+            length: 255
+            nullable: true
+        address:
+            type: string
+            length: 500
+            nullable: true
+        contactNumber:
+            type: string
+            length: '30'
+            nullable: true
+    oneToMany:
+        ads:
+            targetEntity: Ad
+            mappedBy: user

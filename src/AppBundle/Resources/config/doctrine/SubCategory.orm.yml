@@ -1,0 +1,27 @@
+AppBundle\Entity\SubCategory:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\SubCategoryRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+            unique: true
+    oneToMany:
+        ads:
+            targetEntity: Ad
+            mappedBy: subCategory
+    manyToOne:
+        category:
+            targetEntity: Category
+            inversedBy: subCategories
+            joinColumn:
+                name: category
+                referencedColumnName: id
+    lifecycleCallbacks: {  }

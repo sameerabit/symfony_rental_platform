@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<div class="container">
+
+    <h2 class="ui horizontal divider header" style="color: #7d899a">
+        About
+        <span style="color: black;font-weight: bold;">Kuliyata.</span>
+        <span style="color: #FFB70A;">lk</span>
+    </h2>
+    <div class="ui grid ">
+        <div class="twelve wide column middle aligned">
+            <p> <span style="color: black;font-weight: bold;">Kuliyata.</span><span style="color: #FFB70A;">lk</span> is the largest web based rental service platform in Sri Lanka. You can rent/hire anything through
+                <span style="color: black;font-weight: bold;">Kuliyata.</span><span style="color: #FFB70A;">lk</span> web portal.
+                If you have something to rent out or if you are searching for something to get on rent, <span style="color: black;font-weight: bold;">Kuliyata.</span><span style="color: #FFB70A;">lk</span> is the right place. We help people to rent find their needs
+                from their neighborhood.<br><br>
+                All you have to do is just create an <a href="{{ path('fos_user_registration_register') }}">account</a> and post your ad here. Your can earn more customers to your business using <span style="color: black;font-weight: bold;">Kuliyata.</span><span style="color: #FFB70A;">lk</span> as your advertising platform.
+                Please <a href="{{ path('help_supprt_page') }}">contact us</a> for any further support you need.
+            </p>
+        </div>
+        <div class="four wide column center aligned">
+            <img class="ui bordered fluid image" src="{{ asset('/images/common/logo_under_text.png') }}" >
+        </div>
+    </div>
+
+    <h2 class="ui horizontal divider header" style="color: #7d899a; margin-bottom: 30px;">Terms and Conditions</h2>
+    <div class="ui grid ">
+        <div class="four wide column center aligned">
+            <img class="ui bordered fluid image" src="{{ asset('/images/common/terms1.png') }}" >
+        </div>
+        <div class="twelve wide column center aligned aligned">
+            <p>We are .Aki Libo-on
+                Aki Libo-on
+                357K
+                READS
+                e. It doesn’t always have to tell the whole story, but it should at least provide people with an idea of who and what you are. Besides that, it should contain social proof, testimonials, and some personal information that viewers can relate to such as education, family, etc. It also wouldn’t hurt to make sure that it’s also responsive, since more people are surfing online on mobile devices.
+                That may sound complicated, but it’s really not. The main purpose of the ‘About Us’ page is to give visitors a glimpse into the identity of either a person or business. If you know who you are and your goal for your site, the ‘About Us’ page should come naturally. But, if you’re still looking for inspiration, you can always check out the following Top 20 ‘About Us’ pages.
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

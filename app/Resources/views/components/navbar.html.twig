@@ -1,0 +1,63 @@
+{% block navbar %}
+    <div class="ui large top stackable menu " style="background-color: #3e4444; border-radius: 0 !important;">
+        <div class="item" id="navLogo">
+            {#{% if app.request.get('_route') != 'homepage' %}#}
+                <a href="{{ path('homepage') }}"><img src="{{ asset('/images/common/logo.png') }}" style="height: 30px; width: 30px;"></a>
+            {#{% endif %}#}
+        </div>
+        <div class="right menu">
+            {% if app.request.get('_route') == 'homepage' %}
+                <div class="item navItem navSelected">
+            {% else %}
+                <div class="item navItem">
+            {% endif %}
+                <a href="{{ path('homepage') }}">
+                    <i class="home icon"></i>
+                    Home
+                </a>
+            </div>
+            <div class="item">
+                <a href="{{ path('ad_new') }}"><div class="ui yellow button" style="color: black;">Post Your Ad</div></a>
+            </div>
+            {% if is_granted('ROLE_USER') %}
+                {% if app.request.get('_route') == 'user' %}
+                    <div class="item navItem navSelected">
+                {% else %}
+                    <div class="item navItem">
+                {% endif %}
+                    <a href="{{ path('user',{'user':app.user.id}) }}">
+                        <i class="user icon"></i>
+                        {{ app.user.username }}
+                    </a>
+                </div>
+                <div class="item navItem">
+                    <a href="{{ path('fos_user_security_logout') }}">
+                        <i class="power off icon"></i>
+                        Logout
+                    </a>
+                </div>
+            {% else %}
+            {% if app.request.get('_route') == 'fos_user_security_login' or app.request.get('_route') == 'fos_user_registration_register' %}
+                <div class="item navItem navSelected">
+            {% else %}
+                <div class="item navItem">
+            {% endif %}
+                    <a href="{{ path('fos_user_security_login') }}">
+                        <i class="user icon"></i>
+                        Login / Register
+                    </a>
+                </div>
+            {% endif %}
+            {% if app.request.get('_route') == 'about_us_page' %}
+                <div class="item navItem navSelected">
+            {% else %}
+                <div class="item navItem">
+            {% endif %}
+                <a href="{{ path('about_us_page') }}">
+                    <i class="info circle icon"></i>
+                    About us
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

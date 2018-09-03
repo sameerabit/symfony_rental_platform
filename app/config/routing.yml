@@ -1,0 +1,84 @@
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+
+#home
+homepage:
+    path: /
+    controller: AppBundle\Controller\DefaultController::indexAction
+
+#about_us
+about_us_page:
+    path: /aboutus
+    controller: AppBundle\Controller\DefaultController::aboutUsAction
+
+#help_and_support
+help_supprt_page:
+    path: /help_and_support
+    controller: AppBundle\Controller\DefaultController::helpAndSupportAction
+
+#ad routes
+
+ads:
+    path:     /ads
+    controller: AppBundle\Controller\AdController::indexAction
+
+ad_detail:
+    path:     /ads/{id}
+    controller: AppBundle\Controller\AdController::adDetailViewAction
+    requirements:
+        id: '\d+'
+
+ad_update:
+    path:     /ad/update/{id}
+    controller: AppBundle\Controller\AdController::updateAction
+    requirements:
+        id: '\d+'
+
+ad_save:
+    path:     /ad/save
+    controller: AppBundle\Controller\AdController::saveAction
+
+ad_new:
+    path:     /ad/new
+    controller: AppBundle\Controller\AdController::viewFormAction
+
+
+#imageUploader routes
+
+uploadImages:
+    path:     /uploadImages/{adId}
+    controller: AppBundle\Controller\ImageUploaderController::viewFormAction
+
+saveImages:
+    path:     /saveImages
+    controller: AppBundle\Controller\ImageUploaderController::saveAction
+
+#category routes
+
+category:
+    path:     /categories
+    controller: AppBundle\Controller\CategoryController::indexAction
+
+#Sub Category routes
+
+subCategory:
+    path:     /subCategories
+    controller: AppBundle\Controller\SubCategoryController::getSubCategoryListAction
+
+#location routes
+
+location:
+    path:     /locations
+    controller: AppBundle\Controller\LocationController::getLocationsByDistrictIdAction
+
+user_ads:
+    path:     /ads/user
+    controller: AppBundle\Controller\AdController::indexAction
+
+user:
+    path:     /user
+    controller: AppBundle\Controller\UserController::indexAction

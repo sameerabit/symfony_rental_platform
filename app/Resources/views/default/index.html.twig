@@ -1,0 +1,168 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="image-container">
+
+        <img src="{{ asset('images/common/banner01.jpg') }}" alt="">
+        <div class="image-top-right">
+            <div class="ui search">
+                <div class="ui icon input" style="width: 350px;">
+                    <input class="prompt" type="text" placeholder="Search by categories... (House, Office, Car, etc)">
+                    <i class="search icon"></i>
+                </div>
+            </div>
+            <div class="results"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="ui internally celled stackable six column grid center aligned">
+            <div class="row">
+                <div class="column home-category-item">
+                    <a href="{{ path('ads',{'mainCategoryId':1}) }}">
+                        <div class="ui">
+                            <i class="huge grey car icon"></i>
+                            <br>
+                            <br>
+                            <p class="home-category-title">Vehicles</p>
+                            <p class="home-category-description ">Rent all types of vehicles for all your needs. Services ranging from a tuk tuk to your wedding car.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="column home-category-item">
+                    <a href="{{ path('ads',{'mainCategoryId':2}) }}">
+                        <div class="ui">
+                            <i class="huge brown home icon"></i>
+                            <br>
+                            <br>
+                            <p class="home-category-title">Property</p>
+                            <p class="home-category-description ">Includes all types of properties for rent (eg:- Commercial properties, Land, House, Apartment, Room, etc).</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="column home-category-item">
+                    <a href="{{ path('ads',{'mainCategoryId':3}) }}">
+                        <div class="ui">
+                            <i class="huge teal cogs icon"></i>
+                            <br>
+                            <br>
+                            <p class="home-category-title">Machinery</p>
+                            <p class="home-category-description ">Machinery ranging from power tools,portable machinries & Equipments.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="column home-category-item">
+                    <a href="{{ path('ads',{'mainCategoryId':4}) }}">
+                        <div class="ui">
+                            <i class="huge pink female icon"></i>
+                            <br>
+                            <br>
+                            <p class="home-category-title">Clothes / Ornaments</p>
+                            <p class="home-category-description ">Wedding wardrobe inspirations ranging from Blazers,coats,bridal dresses,jewelleries & Groom's wear.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="column home-category-item">
+                    <a href="{{ path('ads',{'mainCategoryId':5}) }}">
+                        <div class="ui">
+                            <i class="huge violet laptop icon"></i>
+                            <br>
+                            <br>
+                            <p class="home-category-title">Electronics</p>
+                            <p class="home-category-description ">Best rent deals of Electronics,including sound systems, cameras & other audio & video electric devices.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="column home-category-item">
+                    <a href="{{ path('ads',{'mainCategoryId':6}) }}">
+                        <div class="ui">
+                            <i class="huge green music icon"></i>
+                            <br>
+                            <br>
+                            <p class="home-category-title">Entertainment</p>
+                            <p class="home-category-description ">Best quality Musical instruments,DJ's, Sound systems and Recording studios to suit any occasion.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="column home-category-item">
+                    <a href="{{ path('ads',{'mainCategoryId':7}) }}">
+                        <div class="ui">
+                            <i class="huge black shopping basket icon"></i>
+                            <br>
+                            <br>
+                            <p class="home-category-title">Festival Items</p>
+                            <p class="home-category-description ">Choose from wide array of festival items(Eg: Tents, Bufet Sets, Chairs, Pirith Mandappa etc.) for all your occasional needs.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="column home-category-item">
+                    <a href="{{ path('ads',{'mainCategoryId':8}) }}">
+                        <div class="ui">
+                            <i class="huge olive football ball icon"></i>
+                            <br>
+                            <br>
+                            <p class="home-category-title">Sports</p>
+                            <p class="home-category-description ">Ranging from Indoor/Outdoor Sports equipments to Stadiums (Eg: Pool Tables, Carom Boards, Cricket Grounds, Futsal etc.).</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="column home-category-item">
+                    <a href="{{ path('ads',{'mainCategoryId':9}) }}">
+                        <div class="ui">
+                            <i class="huge red building icon"></i>
+                            <br>
+                            <br>
+                            <p class="home-category-title">Construction Items</p>
+                            <p class="home-category-description ">Various Type of Construction Industry Items like Column boxes, Concrete Mixers, Compressors etc.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="column home-category-item">
+                    <a href="{{ path('ads',{'mainCategoryId':10}) }}">
+                        <div class="ui">
+                            <i class="huge blue plane icon"></i>
+                            <br>
+                            <br>
+                            <p class="home-category-title">Travelling</p>
+                            <p class="home-category-description ">All types of travelling equipments which are ranging from Compass to Camp sites.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="column home-category-item">
+                    <a href="{{ path('ads',{'mainCategoryId':11}) }}">
+                        <div class="ui">
+                            <i class="huge yellow box icon"></i>
+                            <br>
+                            <br>
+                            <p class="home-category-title">Other</p>
+                            <p class="home-category-description ">Any other miscellaneous items according to your needs can be found here. (eg:- books, etc). Everything else except above categories.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="column home-category-item">
+                    <a href="{{ path('ads',{'mainCategoryId':0}) }}">
+                        <div class="ui">
+                            <i class="huge orange arrow alternate circle right icon"></i>
+                            <br>
+                            <br>
+                            <p class="home-category-title">Browse All</p>
+                            <p class="home-category-description ">Browse all categories.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        {#</div>#}
+    </div>
+{% endblock %}
+
+
+ {% block javascripts %}
+     {{ parent() }}
+     <script src="{{ asset('js/home/home.js') }}" type="text/javascript"></script>
+ {% endblock %}
+
