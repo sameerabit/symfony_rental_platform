@@ -22,7 +22,8 @@ class AdRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin('ad.frequencyType', 'ft')
             ->leftJoin('ad.photos', 'p')
             ->where('ad.state = :status')
-            ->setParameter('status','Not Published');
+            ->setParameter('status','Not Published')
+            ->addOrderBy('ad.id','DESC');
         if (count($filters)>0) {
             if(array_key_exists("categoryId",$filters)){
                 $qb->andWhere('c.id = :categoryId')
@@ -60,7 +61,8 @@ class AdRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin('ad.frequencyType', 'ft')
             ->leftJoin('ad.photos', 'p')
             ->where('ad.state = :status')
-            ->setParameter('status','Not Published');
+            ->setParameter('status','Not Published')
+            ->addOrderBy('ad.id','DESC');
         if (count($filters)>0) {
             if(array_key_exists("locationId",$filters)){
                 $qb->andWhere('l.id = :locationId')
