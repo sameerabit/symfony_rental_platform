@@ -6,6 +6,9 @@
 {% block content %}
     <div class="container">
         <h3>Post Your Ad</h3>
+
+        
+
         <div id="simpleform">
             {{ form_start(form, { 'attr': {'class': 'ui form'} }) }}
             {#{{ form_widget(form) }}#}
@@ -15,9 +18,11 @@
                 </div>
                 <div class="field">
                     {{ form_row(form.title) }}
+                    {{ form_errors(form.title) }}
                 </div>
                 <div class="field">
                     {{ form_row(form.description) }}
+                     {{ form_errors(form.description) }}
                 </div>
                 <div class="two fields">
                     <div class="field">
@@ -30,6 +35,7 @@
                 <div class="fields">
                     <div class="three wide field">
                         {{ form_row(form.frequencyType) }}
+                        {{ form_errors(form.title) }}
                     </div>
                     <div class="two wide field">
                         {{ form_row(form.rentFrequency) }}

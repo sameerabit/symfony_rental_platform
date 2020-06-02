@@ -7,6 +7,9 @@ namespace AppBundle\Entity;
  */
 class Photo
 {
+
+    const NUMBER_OF_PHOTOS = 10;
+
     /**
      * @var int
      */

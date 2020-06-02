@@ -10,92 +10,23 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Ad;
 use AppBundle\Entity\Category;
-use AppBundle\Entity\Item;
 use AppBundle\Entity\Location;
 use AppBundle\Entity\Photo;
 use AppBundle\Entity\SubCategory;
-use AppBundle\Entity\Town;
 use AppBundle\Forms\AdFormType;
-use AppBundle\Forms\ImageUploadFormType;
-use AppBundle\Repository\AdRepository;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 
 class AdController extends Controller
 {
-    private $allCategoriesList = array(
-        array(
-            'name'=>'Vehicles',
-            'id' => 1
-        ),
-        array(
-            'name'=>'Property',
-            'id' => 2
-        ),
-        array(
-            'name'=>'Machinery',
-            'id' => 3
-        ),
-        array(
-            'name'=>'Clothes / Ornaments',
-            'id' => 4
-        ),
-        array(
-            'name'=>'Electronics',
-            'id' => 5
-        ),
-        array(
-            'name'=>'Entertainment',
-            'id' => 6
-        ),
-        array(
-            'name'=>'Festival Items',
-            'id' => 7
-        ),
-        array(
-            'name'=>'Sports',
-            'id' => 8
-        ),
-        array(
-            'name'=>'Construction',
-            'id' => 9
-        ),
-        array(
-            'name'=>'Travelling',
-            'id' => 10
-        ),
-        array(
-            'name'=>'Other',
-            'id' => 11
-        )
-    );
-
-
 
     public function viewFormAction()
     {
         $ad = new Ad();
-        $photo1 = new Photo();
-        $photo2 = new Photo();
-        $photo3 = new Photo();
-        $photo4 = new Photo();
-        $photo5 = new Photo();
-        $ad->getPhotos()->add($photo1);
-        $ad->getPhotos()->add($photo2);
-        $ad->getPhotos()->add($photo3);
-        $ad->getPhotos()->add($photo4);
-        $ad->getPhotos()->add($photo5);
+        for($i=1;$i<=Photo::NUMBER_OF_PHOTOS;$i++){
+            $ad->getPhotos()->add( new Photo());
+        }
         $form = $this->createForm(AdFormType::class,$ad, array(
             'action' => $this->generateUrl('ad_save'),
         ));
@@ -108,9 +39,6 @@ class AdController extends Controller
     {
         $isAjax = false;
         $filters = array();
-        if ($request->isXmlHttpRequest()) {
-            $isAjax = true;
-        }
         $mainCategoryId = $request->get("mainCategoryId");
         $categoryId = $request->get("categoryId");
         $locationId = $request->get("locationId");
@@ -196,18 +124,7 @@ class AdController extends Controller
         $resultQuery = $this->getDoctrine()
             ->getRepository(Ad::class)
             ->getFilteredAds($filters,$isAjax);
-//        if ($request->isXmlHttpRequest()) {
-//            $autoComplete = array();
-//            if ($searchQuery != null) {
-//                foreach ($result as $item){
-//                    $title = $item["title"];
-//                    $id = $item["id"];
-//                    $autoComplete[]=["label"=>$title,"value"=>$id];
-//                }
-//                return $this->json($autoComplete);
-//            }
-//            return $this->json($result);
-//        }
+
 
         if(isset($filters['categoryId']) && $filters['categoryId'] != null){
             $category = $this->getDoctrine()->getRepository(SubCategory::class)
@@ -247,6 +164,7 @@ class AdController extends Controller
     public function saveAction(Request $request){
         $photos = null;
         $photoUrlArray = array();
+        $uniqueId = uniqid();
         if(!empty($request->request->get('ad_form')['id'])){
             $id = $request->request->get('ad_form')['id'];
             /** @var Ad $ad */
@@ -269,12 +187,8 @@ class AdController extends Controller
             'action' => $this->generateUrl('ad_save'),
         ));
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $ad->setUser($this->getUser());
-            $ad->setCreatedAt(new \DateTime(date("Y-m-d")));
-            $ad->setState("Not Published");
-            $uniqueId = uniqid();
-            $ad->setAdNumber($uniqueId);
             $i=1;
             foreach ($ad->getPhotos() as $key => $photo){
                 $dir = __DIR__."/../../../web/images/ads/";
@@ -283,7 +197,7 @@ class AdController extends Controller
                     $photo->getUrl()->move($dir,$url);
                 }else{
                     if(!empty($photoUrlArray)){
-                       $url =  $photoUrlArray[$key];
+                        $url =  $photoUrlArray[$key];
                     }else{
                         $url = "no_image.png";
                     }
@@ -291,16 +205,17 @@ class AdController extends Controller
                 $photo->setUrl($url);
                 ++$i;
             }
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($ad);
-            $entityManager->flush();
+            $this->getDoctrine()->getRepository(Ad::class)->store($ad,$this->getUser());
             return $this->redirectToRoute('ad_update', array('id' => $ad->getId()));
         }
+        return $this->render('application/ad/create.html.twig', array(
+            'form'  => $form->createView()
+        ));
+
     }
 
-    public function updateAction($id)
+    public function updateAction(Ad $ad)
     {
-        $ad = $this->getDoctrine()->getRepository(Ad::class)->find($id);
         $form = $this->createForm(AdFormType::class, $ad, array(
             'action' => $this->generateUrl('ad_save'),
         ));
@@ -309,10 +224,10 @@ class AdController extends Controller
         ));
     }
 
-    public function adDetailViewAction($id){
-        $ad =  $this->getDoctrine()->getRepository(Ad::class)->find($id);
+    public function adDetailViewAction(Ad $ad){
         return $this->render('application/ad/ad_detail.html.twig', array(
             'ad' => $ad,
         ));
     }
+
 }

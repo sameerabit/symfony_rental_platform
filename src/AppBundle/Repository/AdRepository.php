@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Ad;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * AdRepository
@@ -12,6 +13,7 @@ use AppBundle\Entity\Ad;
  */
 class AdRepository extends \Doctrine\ORM\EntityRepository
 {
+
     public function getFilteredAds($filters = array(), $isAjax)
     {
         $qb = $this->getEntityManager()->getRepository(Ad::class)
@@ -42,11 +44,6 @@ class AdRepository extends \Doctrine\ORM\EntityRepository
                     ->setParameter('user', $filters["user"]);
             }
         }
-//        var_dump($qb->getQuery());die;
-//        if($isAjax){
-//            return $qb->getQuery()->getArrayResult();
-//        }
-//        $result = $qb->getQuery()->getResult();
         $result = $qb->getQuery();
         return $result;
     }
@@ -73,9 +70,32 @@ class AdRepository extends \Doctrine\ORM\EntityRepository
                     ->setParameter('mainCategoryId', $filters["mainCategoryId"]);
             }
         }
-//        $result = $qb->getQuery()->getResult();
         $result = $qb->getQuery();
         return $result;
+    }
+
+    public function store($ad,$user){
+        $ad->setUser($user);
+        $ad->setCreatedAt(new \DateTime(date("Y-m-d")));
+        $ad->setState("Not Published");
+        $uniqueId = uniqid();
+        $ad->setAdNumber($uniqueId);
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($ad);
+        $entityManager->flush();
+        return $ad;
+    }
+
+    public function update($ad){
+        $ad->setUser($user);
+        $ad->setCreatedAt(new \DateTime(date("Y-m-d")));
+        $ad->setState("Not Published");
+        $uniqueId = uniqid();
+        $ad->setAdNumber($uniqueId);
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($ad);
+        $entityManager->flush();
+        return $ad;
     }
 
 }
