@@ -86,16 +86,4 @@ class AdRepository extends \Doctrine\ORM\EntityRepository
         return $ad;
     }
 
-    public function update($ad){
-        $ad->setUser($user);
-        $ad->setCreatedAt(new \DateTime(date("Y-m-d")));
-        $ad->setState("Not Published");
-        $uniqueId = uniqid();
-        $ad->setAdNumber($uniqueId);
-        $entityManager = $this->getEntityManager();
-        $entityManager->persist($ad);
-        $entityManager->flush();
-        return $ad;
-    }
-
 }
